@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta content="always" name="referrer">
+        <meta name="theme-color" content="#2932e1">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
+</head>
+<body>
+<div id="dropin-container"></div>
+  <button id="submit-button">Request payment method</button>
+  <script>
+    var button = document.querySelector('#submit-button');
+var clienttoken="eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiJhYWI0MzIwMmU1YzI0YWQ4ODdhN2M3MWU1ZGMwZTZmNmUyY2E5Nzc3NjBmZTg4MDVkNGQxMTZmZGIyYjEzM2VlfGNyZWF0ZWRfYXQ9MjAxOC0xMS0wM1QxNjoxODowNi41MjE4OTczMTQrMDAwMFx1MDAyNm1lcmNoYW50X2lkPWJ6NGJkems2N3Q3eG1icHFcdTAwMjZwdWJsaWNfa2V5PTZ6YnFtcjRjY2c5MnpwZnAiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvYno0YmR6azY3dDd4bWJwcS9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJncmFwaFFMIjp7InVybCI6Imh0dHBzOi8vcGF5bWVudHMuc2FuZGJveC5icmFpbnRyZWUtYXBpLmNvbS9ncmFwaHFsIiwiZGF0ZSI6IjIwMTgtMDUtMDgifSwiY2hhbGxlbmdlcyI6W10sImVudmlyb25tZW50Ijoic2FuZGJveCIsImNsaWVudEFwaVVybCI6Imh0dHBzOi8vYXBpLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb206NDQzL21lcmNoYW50cy9iejRiZHprNjd0N3htYnBxL2NsaWVudF9hcGkiLCJhc3NldHNVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImF1dGhVcmwiOiJodHRwczovL2F1dGgudmVubW8uc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFuYWx5dGljcyI6eyJ1cmwiOiJodHRwczovL29yaWdpbi1hbmFseXRpY3Mtc2FuZC5zYW5kYm94LmJyYWludHJlZS1hcGkuY29tL2J6NGJkems2N3Q3eG1icHEifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoibGltaWRhIiwiY2xpZW50SWQiOm51bGwsInByaXZhY3lVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vcHAiLCJ1c2VyQWdyZWVtZW50VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3RvcyIsImJhc2VVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFzc2V0c1VybCI6Imh0dHBzOi8vY2hlY2tvdXQucGF5cGFsLmNvbSIsImRpcmVjdEJhc2VVcmwiOm51bGwsImFsbG93SHR0cCI6dHJ1ZSwiZW52aXJvbm1lbnROb05ldHdvcmsiOnRydWUsImVudmlyb25tZW50Ijoib2ZmbGluZSIsInVudmV0dGVkTWVyY2hhbnQiOmZhbHNlLCJicmFpbnRyZWVDbGllbnRJZCI6Im1hc3RlcmNsaWVudDMiLCJiaWxsaW5nQWdyZWVtZW50c0VuYWJsZWQiOnRydWUsIm1lcmNoYW50QWNjb3VudElkIjoibGltaWRhIiwiY3VycmVuY3lJc29Db2RlIjoiVVNEIn0sIm1lcmNoYW50SWQiOiJiejRiZHprNjd0N3htYnBxIiwidmVubW8iOiJvZmYifQ==";
+
+    braintree.dropin.create({
+  authorization: clienttoken,
+  container: '#dropin-container',
+  locale: 'zh_TW',
+  googlePay: {
+    merchantId: '31232312',
+    transactionInfo: {
+      totalPriceStatus: 'FINAL',
+      totalPrice: '123.45',
+      currencyCode: 'USD'
+    },
+    cardRequirements: {
+      // We recommend collecting and passing billing address information with all Google Pay transactions as a best practice.
+      billingAddressRequired: true
+    }
+  }
+}, function (createErr, instance) {
+ if (createErr) {
+    // An error in the create call is likely due to
+    // incorrect configuration values or network issues.
+    // An appropriate error will be shown in the UI.
+    console.error(createErr);
+    return;
+  }
+      button.addEventListener('click', function () {
+        instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+		if (requestPaymentMethodErr) {
+        // No payment method is available.
+        // An appropriate error will be shown in the UI.
+        console.error(requestPaymentMethodErr);
+        return;
+      }
+          // Submit payload.nonce to your server
+        });
+      });
+    });
+  </script>
+</body>
+</html>
