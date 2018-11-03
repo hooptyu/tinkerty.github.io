@@ -36,11 +36,11 @@ var paymentsClient = new google.payments.api.PaymentsClient({
 								  event.preventDefault();
 
 								  var paymentDataRequest = googlePaymentInstance.createPaymentDataRequest({
-									merchantId: 'your-merchant-id-from-google', // Omit this line in sandbox; insert your Google merchant ID in production
+									merchantId: '45682665', // Omit this line in sandbox; insert your Google merchant ID in production
 									transactionInfo: {
 									  currencyCode: 'USD',
 									  totalPriceStatus: 'FINAL',
-									  totalPrice: '100.00' // Your amount
+									  totalPrice: '1.00' // Your amount
 									},
 									cardRequirements: {
 									  // We recommend collecting billing address information, at minimum
