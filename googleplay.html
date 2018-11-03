@@ -57,7 +57,7 @@ var paymentsClient = new google.payments.api.PaymentsClient({
 									  if (err) {
 										// Handle parsing error
 									  }
-
+											alert(result);
 									  // Send result.nonce to your server
 									});
 								  }).catch(function (err) {
