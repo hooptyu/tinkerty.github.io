@@ -1,0 +1,80 @@
+<html>
+<head>
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://pay.google.com/gp/p/js/pay.js"></script>
+<script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.39.0/js/google-payment.min.js"></script>
+</head>
+<body>
+<a id="google-pay-button">Play</a>
+<script>
+
+
+	  
+// Make sure to have https://pay.google.com/gp/p/js/pay.js loaded on your page
+
+// You will need a button element on your page styled according to Google's brand guidelines
+// https://developers.google.com/pay/api/brand-guidelines
+var button = document.querySelector('#google-pay-button');
+var clienttoken="";
+var paymentsClient = new google.payments.api.PaymentsClient({
+  environment: 'TEST' // Or 'PRODUCTION'
+});
+      var url = 'http://testccn.lc/braintree/index.php';
+      $.get(url, function(result1){
+			clienttoken=result1;
+									
+						braintree.client.create({
+						  authorization: clienttoken
+						}, function (clientErr, clientInstance) {
+						  braintree.googlePayment.create({
+							client: clientInstance
+						  }, function (googlePaymentErr, googlePaymentInstance) {
+							paymentsClient.isReadyToPay({
+							  allowedPaymentMethods: googlePaymentInstance.createPaymentDataRequest().allowedPaymentMethods
+							}).then(function(response) {
+							  if (response.result) {
+								button.addEventListener('click', function (event) {
+								  event.preventDefault();
+
+								  var paymentDataRequest = googlePaymentInstance.createPaymentDataRequest({
+									merchantId: 'your-merchant-id-from-google', // Omit this line in sandbox; insert your Google merchant ID in production
+									transactionInfo: {
+									  currencyCode: 'USD',
+									  totalPriceStatus: 'FINAL',
+									  totalPrice: '100.00' // Your amount
+									},
+									cardRequirements: {
+									  // We recommend collecting billing address information, at minimum
+									  // billing postal code, and passing that billing postal code with all
+									  // Google Pay transactions as a best practice
+									  billingAddressRequired: true
+									}
+								  });
+
+								  paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData) {
+									googlePaymentInstance.parseResponse(paymentData, function (err, result) {
+									  if (err) {
+										// Handle parsing error
+									  }
+
+									  // Send result.nonce to your server
+									});
+								  }).catch(function (err) {
+									// Handle errors
+								  });
+								});
+							  }
+							}).catch(function (err) {
+							  // Handle errors
+							});
+						  });
+
+						  // Set up other Braintree components
+						});
+	  });
+ 
+</script>
+</body>
+</html>
