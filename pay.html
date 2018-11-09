@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta content="always" name="referrer">
+        <meta name="theme-color" content="#2932e1"></head>
+<body>
+<form style="margin:0 auto;width:100px;" action="https://www.paypal.com/row/cgi-bin/webscr" id="myform" name="myform" method="post">  
+
+<input type="hidden" name="cmd" value="_xclick"> <!-- // "_xclick" 立即购买   -->
+<!--421876132@qq.com 379545092@qq.com -->
+<input type="hidden" name="business" value="421876132@qq.com">  <!--//PayPal账户上的电子邮件地址-->
+<input type="hidden" name="item_name" value="Recharge for Yueai App."> <!--//物品名称（或购物车名称）   -->
+<input type="hidden" name="currency_code" value="TWD">  <!--//定义币种以标示货币变量 值可以为 TWD "USD"、"EUR"、"GBP"、"CAD"、"JPY"。    -->
+<input type="hidden" name="amount" value="489"> <!--//物品的价格（购物车中所有物品的总价格,因为是_Xclick模式）   -->
+<input type="hidden" name="custom" value="eyJ1aWQiOiIiLCJ0b191aWQiOiIiLCJwYXl3YXkiOiJwYXlwYWwiLCJ0eXBlIjoiMyIsIm1vbmV5IjoiNDg5IiwiY291bnRzIjoiNjAwIiwiZGVzY3JpcHRpb24iOiI2MDBcdTk0N2RcdTc3ZjNcdTUyYTBcdTUwM2MifQ=="> <!--决不会向您的客户显示的可选转递变量。可用于跟踪存货   -->
+<input type="hidden" name="no_shipping" value="1">
+<!--<input type="hidden" name="cancel_return" value="http://47.90.66.61:81/paycenter/pay/"> -->
+<input type="hidden" name="return" value="http://47.90.66.61:81/paycenter/pay/success.php"> 
+<input type="hidden" name="notify_url" value="http://47.90.66.61:81/service/PaypalReturn">
+<input type="image" src="http://www.paypal.com/zh_XC/i/btn/x-click-but01.gif" name="submit" alt="請使用PayPal付款！">  
+</form>  
+<script type="text/javascript">
+		//$("#myform").submit();
+</script>
+</body>
+</html>
