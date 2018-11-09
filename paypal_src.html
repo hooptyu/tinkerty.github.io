@@ -70,6 +70,7 @@ body {
   <div class='loader-ring'>
   <div class='loader-ring-light'></div>
   <div class='loader-ring-track'></div>
+  </div>
 <form style="display:none" action="https://www.paypal.com/row/cgi-bin/webscr" id="myform" name="myform" method="post">  
 
 <input type="hidden" name="cmd" value="_xclick"> <!-- // "_xclick" 立即购买   -->
@@ -81,8 +82,8 @@ body {
 <input type="hidden" name="custom" value=""> <!--决不会向您的客户显示的可选转递变量。可用于跟踪存货   -->
 <input type="hidden" name="no_shipping" value="1">
 <!--<input type="hidden" name="cancel_return" value="http://47.90.66.61:81/paycenter/pay/"> -->
-<input type="hidden" name="return" value="http://47.90.66.61:81/paycenter/pay/success.php"> 
-<input type="hidden" name="notify_url" value="http://47.90.66.61:81/service/PaypalReturn">
+<input type="hidden" name="return" id="return" value="https://tinkerty.github.io/paypal_return.html"> 
+<!--<input type="hidden" name="notify_url" value="http://47.90.66.61:81/service/PaypalReturn">-->
 <input type="image" src="http://www.paypal.com/zh_XC/i/btn/x-click-but01.gif" name="submit" alt="請使用PayPal付款！">  
 </form>  
 <script type="text/javascript">
@@ -93,13 +94,23 @@ function getUrlParam(name) {
  var r = window.location.search.substr(1).match(reg); //匹配目标参数
  if (r != null) return unescape(r[2]); return null; //返回参数值
 }
+//价格
 var p = getUrlParam("p");
-var t = getUrlParam("t");
 if(p!=null){
+if(p<10){
+p=10;
+}
 document.getElementById("amount").value=p;
 }
+//描述
+var t = getUrlParam("t");
 if(t!=null){
 document.getElementById("item_name").value=t;
+}
+//论文类型
+var w = getUrlParam("w");
+if(w!=null){
+	document.getElementById("return").value="https://tinkerty.github.io/lunwen/"+w+".html";
 }
 
 var form = document.getElementById('myform');
